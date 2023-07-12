@@ -68,7 +68,7 @@ where first_name = 'Kelly' or first_name = 'Willie' and active = '1'
 Пытался как то с помощью right сделать, но не вышло, возможно что то не так прописываю, но вообще такое решение тоже работает, хоть и костыльно
 ![5.1](img/5.1.png)
 ```mysql
-select substring_index(email, '@', 1), right(email, 18)
+select lower((substring_index(email, '@', 1))), substring_index(email, '@', -1)
 from customer 
 ```
 ---
