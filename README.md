@@ -20,6 +20,13 @@ SELECT distinct district
 FROM address
 where district <> "% %" and district = 'K%a'
 ```
+Получилось:
+```mysql
+SELECT distinct district
+FROM address
+where district like 'K%a' and district not like '% %';
+```
+![1.2](img/1.2.png)
 ---
 ## Задание 2
 Вот так как-то
@@ -28,6 +35,14 @@ where district <> "% %" and district = 'K%a'
 select amount
 from payment 
 where amount > '10.00' and payment_date between '2005-06-15' and '2005-06-18'
+```
+Исправил
+![2.2](img/2.2.png)
+```mysql
+select *
+from payment 
+where amount > '10.00' and payment_date between '2005-06-15' and '2005-06-19'
+order by payment_date 
 ```
 ---
 ## Задание 3
