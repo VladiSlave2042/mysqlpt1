@@ -73,5 +73,11 @@ from customer
 ```
 ---
 ## Задание 6
-Чет не выходит
+Вышло только первый столбец с заглавной сделать.
+![6.1](img/6.1.png)
+```mysql
+select concat(substring(email, 1, 1), lower((substring_index((substring(email, 2, 100)), '@', 1)))), 
+substring_index(email, '@', -1)
+from customer 
+```
 ---  
