@@ -73,11 +73,11 @@ from customer
 ```
 ---
 ## Задание 6
-Вышло только первый столбец с заглавной сделать.
+Вышло только такая это кажется лажа, фактически костыль, по крайней мере второй столбец точно не будит коректно работать если емейлы будут разные.
 ![6.1](img/6.1.png)
 ```mysql
 select concat(substring(email, 1, 1), lower((substring_index((substring(email, 2, 100)), '@', 1)))), 
-substring_index(email, '@', -1)
+concat(upper(substring(email, -18, 1)) , substring_index((substring(email, -17, 17)), '@', -1))
 from customer 
 ```
 ---  
