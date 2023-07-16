@@ -28,7 +28,7 @@ where `length` > (select avg(`length`) from film)
 ```
 ---
 ## Задание 3
-Ну вроде бы как-то так
+Ну вроде бы как-то так, хоть в базе и 2 года по дате, но месяца не повторяются
 ![3.1](img/3.1.png)
 ```mysql
 SELECT MONTH(p.payment_date) 'Месяц', SUM(p.amount) 'Сумма платежей', 
