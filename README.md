@@ -40,11 +40,29 @@ order by SUM(p.amount) desc
 limit 1
 ```
 ---
-## 
+## Задание 4
+Готово
+![4.1](img/4.1.png)
+```mysql
+SELECT count(p.payment_id) 'Продажи',  
+concat(s.first_name, ' ', s.last_name) 'Продавец', 
+CASE
+WHEN count(p.payment_id) > 8000 THEN 'Да'
+WHEN count(p.payment_id) < 8000 THEN 'Нет'
+END AS Премия
+FROM payment p
+inner join staff s on p.staff_id = s.staff_id 
+GROUP BY s.staff_id
+```
 ---
-## 
----
-## 
----
-## 
+## Задание 5
+Т.к. дата аренды пустое поле, то получается фильм ни разу не брали в аренду.
+![5.1](img/5.1.png)
+```mysql
+select f.title 'Название фильма', r.rental_date 'Дата аренды'
+from film f 
+left join inventory i on i.film_id = f.film_id 
+left join rental r on i.inventory_id = r.inventory_id 
+where r.rental_date is null 
+```
 ---
