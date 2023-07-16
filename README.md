@@ -1,83 +1,50 @@
-# «SQL. Часть 1» | "Бойко Владислав"
+# «SQL. Часть 2» | 'Бойко Владислав'
 ---
 ## Задание 1
-Хоть убей не пойму как исключить пробелы
+В целом надеюсь правильно понял задание, на счет пользователей неуверен, почему-то если count использовать то возвращает число равное customers. Можно конечно подзапрос написать, но думаю причина другная
 ![1.1](img/1.1.png)
-Есть вот два запроса, как их сенергировать не знаю даже, пробывал and в разных последовательностях и эпостасях ниче не выходит, посоветовали not like 'K%a[^ ]' тоже не помогло.
 ```mysql
-SELECT distinct district
-FROM address
-where district like "K%a"
-```
-```mysql
-SELECT distinct district
-FROM address
-where district not like "% %"
-```
-Запрос выдает пустоту: 
-```mysql
-SELECT distinct district
-FROM address
-where district <> "% %" and district = 'K%a'
-```
-Получилось:
-```mysql
-SELECT distinct district
-FROM address
-where district like 'K%a' and district not like '% %';
+select c.store_id, count(c.customer_id) 'Колл-во покупателей', 
+concat(s2.first_name, ' ', s2.last_name) 'ФИО сотрудника', 
+c2.city 'Город', s2.username 'Пользователи'
+from customer c
+inner join store s on c.store_id = s.store_id 
+inner join staff s2 on s.manager_staff_id = s2.staff_id 
+inner join address a on s.address_id = a.address_id 
+inner join city c2 on a.city_id = c2.city_id 
+group by c.store_id, s2.username 
+having count(c.customer_id) > 300
 ```
 ![1.2](img/1.2.png)
+Вроде видно должно быть.
 ---
 ## Задание 2
-Вот так как-то
+Вроде что-то как-то так
 ![2.1](img/2.1.png)
 ```mysql
-select amount
-from payment 
-where amount > '10.00' and payment_date between '2005-06-15' and '2005-06-18'
-```
-Исправил
-![2.2](img/2.2.png)
-```mysql
-select *
-from payment 
-where amount > '10.00' and payment_date between '2005-06-15' and '2005-06-19'
-order by payment_date 
+select count(title)
+from film 
+where `length` > (select avg(`length`) from film)
 ```
 ---
 ## Задание 3
-Вот так как-то
+Ну вроде бы как-то так
 ![3.1](img/3.1.png)
 ```mysql
-select rental_date, rental_id, inventory_id 
-from rental	
-order by rental_date desc
-limit 5
+SELECT MONTH(p.payment_date) 'Месяц', SUM(p.amount) 'Сумма платежей', 
+count(r.rental_id) 'Колл-во аренд в месяце' 
+FROM payment p
+inner join rental r on p.rental_id = r.rental_id 
+GROUP BY MONTH(p.payment_date), month(r.rental_date)
+order by SUM(p.amount) desc
+limit 1
 ```
 ---
-## Задание 4
-Вот так как-то
-![4.1](img/4.1.png)
-```mysql
-select lower(replace(first_name, 'L', 'P')), lower(replace(last_name , 'L', 'P'))  
-from customer
-where first_name = 'Kelly' or first_name = 'Willie' and active = '1'
-```
+## 
 ---
-## Задание 5
-Пытался как то с помощью right сделать, но не вышло, возможно что то не так прописываю, но вообще такое решение тоже работает, хоть и костыльно
-![5.1](img/5.1.png)
-```mysql
-select lower((substring_index(email, '@', 1))), substring_index(email, '@', -1)
-from customer 
-```
+## 
 ---
-## Задание 6
-Вышло только такая это кажется лажа, фактически костыль, по крайней мере второй столбец точно не будит коректно работать если емейлы будут разные.
-![6.1](img/6.1.png)
-```mysql
-select concat(substring(email, 1, 1), lower((substring_index((substring(email, 2, 100)), '@', 1)))), 
-concat(upper(substring(email, -18, 1)) , substring_index((substring(email, -17, 17)), '@', -1))
-from customer 
-```
----  
+## 
+---
+## 
+---
